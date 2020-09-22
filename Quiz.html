@@ -13,88 +13,160 @@
 
 </head>
 <body>
-   
-    <div class="jumbotron jumbotron-fluid" class="CenterJumbo">
-          <h1 class="display-4">JavaScript Quiz Challenge </h1>
-          <p class="lead">Click the Button Below to Start</p>
-          <button type="button" class="btn btn-primary">Start</button>
+    <div id="quiz">
+        <div id="quiz-header">
+          <h1>Take a javascript quiz</h1>
+          <p class="faded"> To test your knowledge click Start.</p>
+        </div>
+        <div id="quiz-start-screen">
+          <button href="#" id="quizstartbtn" class="quiz-button"> Start</button>
+
+
         </div>
       </div>
-
-      <!--QUESTION 1-->
-
-   
-      <div class="card" style="width: 50rem;">
-<p2> 1.) Inside which HTML element do we put the JavaScript?</p2>
-      <ul class="list-group">
-        <div class="container-lg">
-        <button type="button" class="btn btn-primary" > a.) java </button>
-        </div>
-        <div class="container-lg">
-        <button type="button" class="btn btn-primary"> b.) script </button>
-        <div>
-            <div class="container-lg">
-        <button type="button" class="btn btn-primary"> c.) HTML </button>
-</div>
-<div class="container-lg">
-        <button type="button" class="btn btn-primary"> d.)Element</button>
-        </div>
-      </ul>
-    </div>
+      <script>
 
 
+// Click Event to start quiz //
 
-      <!--QUESTION 2-->
-      <div class="card" style="width: 50rem;">
-      <p2> Which are all JavaScript Data types? </p2>
-      <ul class="list-group">
-        <div class="container-lg">
-        <button type="button" class="btn btn-primary"> a.) Number, String, Boolean, Object,Undefined</button>
-        </div>
-        <div class="container-lg">
-        <button type="button" class="btn btn-primary"> b.) Number, String, Typography, Object,Undefined </button>
-        </div>
-        <div class="container-lg">
-        <button type="button" class="btn btn-primary"> c.) Number, String, Boolean, Object, unknown </button>
-        </div>
-        <div class="container-lg">
-        <button type="button" class="btn btn-primary"> d.) Number, String, Boolean, JSON,Undefined</button>
-        </div>
-      </ul>
-      </div>
+$( "#quizstartbtn" ).click(function() {
+  $("quiz").click();
+});
+ // variables 
+
+var startCard = document.getElementById("startcard");
+var quiz = document.getElementById("questionDiv");
+var scores = document.getElementById("scoresDiv");
+var quesestion = document.getElementById("question")
+var options1 = document.getElementById("a");
+var options2 = document.getElementById("b");
+var options3 = document.getElementById("c");
+var options4 = document.getElementById("b");
+var Points = document.getElementById("Points");
+var seconds = 90;
+
+//Questions
+  var QuizQuestions = [
+{
+      question: "1.) Inside which HTML element do we put the JavaScript?",
+      options: { 
+        a: "java",
+        b: "script",
+        c: "HTML",
+        d: "Element", 
+      }, 
+      correctAnswer: "b"
+
+},
+{
+      question: "2.) Which are all JavaScript Data types?",
+      options: { 
+        a: "Number, String, Boolean, Object,Undefined",
+        b: "scNumber, String, Typography, Object,Undefined",
+        c: "Number, String, Boolean, Object, unknown",
+        d: "Number, String, Boolean, JSON,Undefined", 
+      }, 
+      correctAnswer: "a"
+}, 
+
+{
+      question: " 3.)What is 'this' keyword in JavaScript? ",
+      options: { 
+        a: "'This' keyword refers to the object called 'this'",
+        b: "'This' keyword refers to the object from another function",
+        c: "This' keyword refers to the object",
+        d: "'This' keyword refers to the object from where it was called.", 
+      }, 
+      correctAnswer: "d"
+},
+]
+console.log(QuizQuestions)
 
 
-      <!--QUESTION 3-->
+//functionaility 
+var previousQuestion = questions.length - 1;
+var displayedQuestions = 0;
 
-      <div class="card" style="width: 50rem;">
-      <p2>  What is 'this' keyword in JavaScript? </p2>
-      <ul class="list-group">
-        <div class="container-lg">
-        <button type="button" class="btn btn-primary"> a.) This' keyword refers to the object called "this"</button>
-        </div>
 
-        <div class="container-lg">
-        <button type="button" class="btn btn-primary"> b.) 'This' keyword refers to the object from another function </button>
-    </div>
-        <div class="container-lg">
-        <button type="button" class="btn btn-primary"> c.) 'This' keyword refers to the object. </button>
-        </div>
-        <div class="container-lg">
-        <button type="button" class="btn btn-primary"> d.) 'This' keyword refers to the object from where it was called. </button>
-    </div>
-    </ul>
-</div>
+function randomQuestions() {
+    var randomQuestions = question[displayedQuestions];
+    question.innerHTML = "<h5>" + randomQuestions.question + "</h5>";
+    options1.innerHTML = randomQuestions.options1;
+    options2.innerHTML = randomQuestions.options2;
+    options3.innerHTML = randomQuestions.options3;
+    options4.innerHTML = randomQuestions.options4;
+}
 
-      <!--all done-->
-      <div class="card" style="width: 50rem;">
-      <p2> All Done! </p2>
-      <p3> Your Scored </p3>
-      <div class="form-group">
-        <label for="exampleInputPassword1">What is your Email? </label>
-        <div class="container-lg"></div>
-        <input type="password" class="form-control" id="exampleInputPassword1">
-      </div>
-      </div>
-      </div>
-    </div>
-    </body>
+function countDown() {
+    var timeLeft = document.getElementById("time")
+    var i = setInterval(function () {
+        seconds--;
+        var secondsString = seconds.toString();
+        timeLeft.textContent = secondsString;
+        if (seconds <= 0) {
+            clearInterval(i);
+            alert("Try Again. Use Google!!!")
+        } else if (previousQuestion === displayedQuestions) {
+            clearInterval(i)
+        }
+    }, 1000);
+}
+
+document.getElementById("startbutton").addEventListener("click", function startQuiz() {
+    startCard.style.display = "none";
+    randomQuestions();
+    quiz.style.display = "block"
+    countDown();
+});
+
+function checkAnswer(answer) {
+    if (answer == questions[displayedQuestions].correct) {
+        console.log("Bingo!");
+    } else {
+        seconds -= 10;
+        console.log("Come on man...");
+    }
+    if (displayedQuestions < previousQuestion) {
+        displayedQuestions++;
+        randomQuestions();
+    } else
+        scoreDisplay();
+}
+function correctAnswer() {
+    document.getElementById()
+}
+
+
+function scoreDisplay() {
+    quiz.style.display = "none"
+    scores.style.display = "block";
+    total.innerHTML = "Your Total Score is... " + seconds;
+}
+
+
+var userInitals = document.getElementById("user-initials");
+var submitScore = document.getElementById("submitScore");
+
+var highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+
+submitScore.addEventListener("click", function (event) {
+    event.preventDefault();
+
+    var user = {
+        initials: userInitals.value.trim(),
+        score: seconds,
+    }
+    console.log(user)
+    highScores.push(user);
+
+    localStorage.setItem("highScores", JSON.stringify(highScores));
+    console.log(highScores)
+    window.location = "Highscore.html";
+
+    document.getElementById("highScores").html(user);
+
+
+})
+© 2020 GitHub, Inc.
+      </script>
+</body>
