@@ -11,7 +11,10 @@ var options3 = document.getElementById("c");
 var options4 = document.getElementById("b");
 
 function myFunction() {
-  document.getElementById("quiz-header").style.display = "none";
+  document.getElementById("quiz-header").style.display = "none"; 
+}
+
+
 
 
 //Questions
@@ -52,6 +55,4 @@ function myFunction() {
 console.log(QuizQuestions)
 
 
-}
 
-//
